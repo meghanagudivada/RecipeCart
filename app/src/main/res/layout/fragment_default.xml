@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DefaultFragment"
+    android:orientation="vertical">
+
+    <com.denzcoskun.imageslider.ImageSlider
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        app:placeholder="@drawable/recepie_cart_logo"
+        app:error_image="@drawable/recepie_cart_logo"
+        app:auto_cycle="true"
+        app:delay="0"
+        app:period="1000"
+        app:corner_radius="5"
+        android:id="@+id/slider"
+        ></com.denzcoskun.imageslider.ImageSlider>
+<!--    <ImageView-->
+<!--        android:id="@+id/imageView"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:scaleType="fitXY"-->
+<!--        android:src="@drawable/recepie_cart_logo"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"></ImageView>-->
+
+    <TextView
+        android:paddingTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="EAT.DRINK.LOVE"
+        android:textColor="@color/purple_200"
+        android:layout_gravity="center"
+        android:textSize="40sp"
+        android:textStyle="italic"
+ />
+
+
+</LinearLayout>
