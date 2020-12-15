@@ -1,4 +1,4 @@
-package com.example.recipes
+package com.example.recipes.view
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.models.SlideModel
+import com.example.recipes.R
 
 
 class DefaultFragment : Fragment() {

@@ -1,34 +1,37 @@
-package com.example.recipes
+package com.example.recipes.view
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
+import com.example.recipes.*
+import com.example.recipes.model.ApiService
+import com.example.recipes.model.Recipe
+import com.example.recipes.model.RetrofitInstance
+import com.example.recipes.view.*
+import com.example.recipes.view.SearchFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import retrofit2.Response
 
 class MainActivity : AppCompatActivity()
-    ,ListAdapter.OnItemClickListener
- {
+    , ListAdapter.OnItemClickListener {
 
-    private lateinit var bottomNavigationView:BottomNavigationView
-    private lateinit var selectorFragment:Fragment
-    var cartItem =  arrayListOf<Recipe>()
+    private lateinit var bottomNavigationView: BottomNavigationView
+    private lateinit var selectorFragment: Fragment
+    var cartItem = arrayListOf<Recipe>()
     private lateinit var retService: ApiService
     private lateinit var recipe: ArrayList<Recipe>
     private lateinit var adapter: ListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         retService = RetrofitInstance.getService().create(ApiService::class.java)
         recipe = arrayListOf()
-
+        Log.i("tag","on create called")
         val call: retrofit2.Call<List<Recipe>> = retService.getRecipes()
         call.enqueue(object : retrofit2.Callback<List<Recipe>> {
             override fun onResponse(
@@ -37,8 +40,10 @@ class MainActivity : AppCompatActivity()
             ) {
                 recipe = (response.body() as ArrayList<Recipe>?)!!
 
-                for (i in recipe)
+                for (i in recipe) {
                     i.isClicked = false
+                    i.num = 0
+                }
 
 
             }
@@ -54,7 +59,7 @@ class MainActivity : AppCompatActivity()
             when (item.itemId) {
                 R.id.nav_home -> {
                     //startActivity(Intent(this, HomeActivity::class.java))
-                    adapter = ListAdapter(recipe,this@MainActivity)
+                    adapter = ListAdapter(recipe, this@MainActivity)
                     adapter.notifyDataSetChanged()
                     selectorFragment = HomeFragment(adapter)
                 }
@@ -77,25 +82,41 @@ class MainActivity : AppCompatActivity()
             }
             true
         }
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container, DefaultFragment())
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, DefaultFragment())
             .commit()
 
     }
 
-     override fun onItemClick(position: Int, r: Recipe) {
-         recipe[position] = r
-     }
+    override fun onStart() {
+        super.onStart()
+        Log.i("tag","on start called")
+    }
 
-     fun getCartItems():ArrayList<Recipe>{
-         for (i in recipe)
-             if (i.isClicked) {
-                 if(!cartItem.contains(i))
-                   cartItem.add(i)
-                 else
-                     Toast.makeText(this,"This is already present in the cart",Toast.LENGTH_LONG).show()
-             }
-         return cartItem
-     }
+    override fun onResume() {
+        super.onResume()
+        Log.i("tag","on resume called")
+    }
+
+    override fun onItemClick(position: Int, r: Recipe) {
+        recipe[position] = r
+    }
+
+    fun getCartItems(): ArrayList<Recipe> {
+
+        for (i in recipe)
+            if (i.isClicked) {
+
+                if (!cartItem.contains(i)) {
+                    i.num = 1
+                    cartItem.add(i)
+                }
+            }
+
+        return cartItem
+    }
 
 
- }
+
+
+}

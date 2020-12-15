@@ -1,4 +1,4 @@
-package com.example.recipes
+package com.example.recipes.view
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,30 +8,35 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
+import com.example.recipes.R
+import com.example.recipes.model.Recipe
 
 class CartAdapter(private val cartItems:ArrayList<Recipe>) : RecyclerView.Adapter<CartAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-        val itemView =
-            LayoutInflater.from(parent.context).inflate(R.layout.cart_item,parent,false)
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.cart_item,parent,false)
         return ViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        val res = cartItems[position]
         Glide.with(holder.imageView.context).load(cartItems[position].image).into(holder.imageView)
         holder.nameTextView.text = cartItems[position].name
         holder.priceTextView.text = cartItems[position].price + "$"
         holder.categoryTextView.text = cartItems[position].category
-        holder.txt_amount.number = 1.toString()
-//        holder.txt_amount.number = cartItems[position].price
+        holder.txt_amount.number = cartItems[position].num.toString()
         holder.txt_amount.setOnValueChangeListener { view, oldValue, newValue ->
+
+            res.num = newValue
             if (newValue == 0) {
-                cartItems.remove(cartItems[position])
-                notifyDataSetChanged()
+                res.isClicked=false
+                cartItems.remove(res)
+                notifyItemRemoved(position)
             }
             else
-             holder.priceTextView.text =  cartItems[position].price.toDouble() .times(newValue).toString().format("%.1f") + "$"
+             holder.priceTextView.text =  res.price.toDouble() .times(newValue).toString().format("%.1f") + "$"
         }
 
 

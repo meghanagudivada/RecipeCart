@@ -1,18 +1,18 @@
-package com.example.recipes
+package com.example.recipes.view
 
 
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.recipes.R
+import com.example.recipes.model.Recipe
 
-class ListAdapter(private val recipes: List<Recipe>, private val listener: ListAdapter.OnItemClickListener
+class ListAdapter(private val recipes: List<Recipe>, private val listener: OnItemClickListener
 ) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
 
@@ -29,7 +29,10 @@ class ListAdapter(private val recipes: List<Recipe>, private val listener: ListA
         holder.priceTextView.text =recipes[position].price + "$"
         holder.addButton.setOnClickListener(View.OnClickListener {
 
-            recipes[position].isClicked = true
+            if (!recipes[position].isClicked){
+                 recipes[position].isClicked = true
+                 recipes[position].num = 1}
+
             if (listener!=null)
                 listener.onItemClick(position,recipes[position])
             notifyItemChanged(position)
@@ -81,9 +84,12 @@ class ListAdapter(private val recipes: List<Recipe>, private val listener: ListA
 
     }
 
-    interface OnItemClickListener{
-      fun onItemClick(position: Int,recipe: Recipe)
-  }
+    interface OnItemClickListener {
+
+        fun onItemClick(position: Int,recipe: Recipe)
+
+    }
+
 
 //    fun getSelectedItems():List<Recipe>
 //    {

@@ -1,4 +1,4 @@
-package com.example.recipes
+package com.example.recipes.view
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import androidx.palette.graphics.Palette
+import com.example.recipes.R
 
 class DetailsActivity : AppCompatActivity() {
     private lateinit var nameTextView: TextView

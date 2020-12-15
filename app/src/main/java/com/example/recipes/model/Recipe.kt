@@ -1,4 +1,4 @@
-package com.example.recipes
+package com.example.recipes.model
 
 data class Recipe(val id : Int,
                   val name : String,
@@ -7,4 +7,5 @@ data class Recipe(val id : Int,
                   val label:String,
                   val price:String,
                   val description:String,
-                  var isClicked:Boolean)
+                  var isClicked:Boolean,
+                  var num:Int)
