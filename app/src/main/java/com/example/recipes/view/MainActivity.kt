@@ -5,12 +5,14 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.example.recipes.*
 import com.example.recipes.model.ApiService
 import com.example.recipes.model.Recipe
 import com.example.recipes.model.RetrofitInstance
 import com.example.recipes.view.*
 import com.example.recipes.view.SearchFragment
+import com.example.recipes.viewmodel.MainActivityViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import retrofit2.Response
 
@@ -20,15 +22,19 @@ class MainActivity : AppCompatActivity()
     private lateinit var bottomNavigationView: BottomNavigationView
     private lateinit var selectorFragment: Fragment
     var cartItem = arrayListOf<Recipe>()
-    private lateinit var retService: ApiService
-    private lateinit var recipe: ArrayList<Recipe>
-    private lateinit var adapter: ListAdapter
+   private lateinit var retService: ApiService
+   private lateinit var recipe: ArrayList<Recipe>
+   private lateinit var adapter: ListAdapter
+    private lateinit var viewModel:MainActivityViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        Log.i("tag","on create called")
+        viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+       // recipe = viewModel.getData() as ArrayList<Recipe>
         retService = RetrofitInstance.getService().create(ApiService::class.java)
         recipe = arrayListOf()
         Log.i("tag","on create called")
@@ -53,7 +59,7 @@ class MainActivity : AppCompatActivity()
             }
 
         })
-
+//        https://github.com/meghanagudivada/RecipeCart
         bottomNavigationView = findViewById(R.id.bottom_navigation)
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -69,22 +75,24 @@ class MainActivity : AppCompatActivity()
                 }
 
                 R.id.nav_cart -> {
-//                    cartItem = adapter.getSelectedItems() as ArrayList<Recipe>
+                    //cartItem = adapter.getSelectedItems() as ArrayList<Recipe>
                     selectorFragment = CartFragment(CartAdapter(getCartItems()))
 
                 }
 
                 R.id.nav_profile -> selectorFragment = ProfileFragment()
             }
+            viewModel.setCurrentFragment(selectorFragment)
             if (selectorFragment != null) {
                 supportFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container, selectorFragment).commit()
+                    .replace(R.id.fragment_container, viewModel.getCurrentFragment()).commit()
             }
             true
         }
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, DefaultFragment())
             .commit()
+
 
     }
 

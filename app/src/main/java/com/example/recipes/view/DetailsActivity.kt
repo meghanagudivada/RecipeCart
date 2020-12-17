@@ -7,31 +7,29 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import androidx.palette.graphics.Palette
 import com.example.recipes.R
+import com.example.recipes.databinding.ActivityDetailsBinding
 
 class DetailsActivity : AppCompatActivity() {
-    private lateinit var nameTextView: TextView
-    private lateinit var contentTextView: TextView
-    private lateinit var imageView: ImageView
-    private lateinit var layout: LinearLayout
+    private lateinit var binding:ActivityDetailsBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_details)
-        nameTextView = findViewById(R.id.nameTextView)
-        contentTextView = findViewById(R.id.contentTextView)
-        imageView = findViewById(R.id.imageView)
-        layout = findViewById(R.id.linearLayout)
+        binding = DataBindingUtil.setContentView(this,R.layout.activity_details)
+//        setContentView(R.layout.activity_details)
+
 
         val imageUrl = intent.getStringExtra("imageUrl")
         val description = intent.getStringExtra("content")
         val name = intent.getStringExtra("name")
-        nameTextView.text = name
-        contentTextView.text = description
-        Glide.with(imageView.context).load(imageUrl).into(imageView)
+        binding.nameTextView.text = name
+        binding.contentTextView.text = description
+        Glide.with(binding.imageView.context).load(imageUrl).into(binding.imageView)
         setupBackgroundColor(imageUrl!!)
     }
 
@@ -46,7 +44,8 @@ class DetailsActivity : AppCompatActivity() {
                     ) {
                         Palette.from(resource)
                                 .generate(){palette -> val intColor = palette?.mutedSwatch?.rgb ?:0
-                                    layout.setBackgroundColor(intColor)
+                                    //
+                                    binding.linearLayout.setBackgroundColor(intColor)
                                 }
                     }
 

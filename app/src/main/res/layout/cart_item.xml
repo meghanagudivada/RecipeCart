@@ -52,7 +52,7 @@
                 app:finalNumber="100"
                 app:textSize="10sp"
                 android:layout_width="80dp"
-                android:layout_height="30dp"></com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
+                android:layout_height="50dp"></com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
 
         </LinearLayout>
     </LinearLayout>

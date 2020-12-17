@@ -2,6 +2,7 @@ package com.example.recipes.view
 
 
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,9 +30,19 @@ class ListAdapter(private val recipes: List<Recipe>, private val listener: OnIte
         holder.priceTextView.text =recipes[position].price + "$"
         holder.addButton.setOnClickListener(View.OnClickListener {
 
-            if (!recipes[position].isClicked){
+            if (!recipes[position].isClicked)
+            {
                  recipes[position].isClicked = true
-                 recipes[position].num = 1}
+                 recipes[position].num = 1
+
+            }
+            else
+            {
+                recipes[position].num ++
+            }
+
+
+
 
             if (listener!=null)
                 listener.onItemClick(position,recipes[position])

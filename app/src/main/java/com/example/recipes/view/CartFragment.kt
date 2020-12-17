@@ -26,7 +26,7 @@ class CartFragment(private val adapter: CartAdapter) : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        Log.i("tag","OnCreateView")
+        Log.i("tag","OnCreateView from cart fragment")
         return inflater.inflate(R.layout.fragment_cart, container, false)
     }
 
@@ -34,7 +34,7 @@ class CartFragment(private val adapter: CartAdapter) : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.i("tag","fragment onViewCreated called")
+         Log.i("tag","fragment onViewCreated called")
         recyclerView = view.findViewById(R.id.cartRecyclerView)
         imageView = view.findViewById(R.id.cartEmptyImage)
         button = view.findViewById(R.id.btn_place_order)
