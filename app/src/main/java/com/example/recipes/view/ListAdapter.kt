@@ -13,10 +13,16 @@ import com.bumptech.glide.Glide
 import com.example.recipes.R
 import com.example.recipes.model.Recipe
 
-class ListAdapter(private val recipes: List<Recipe>, private val listener: OnItemClickListener
+class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: OnItemClickListener
 ) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
 
+
+    fun updateRecipeList(newRecipeList:List<Recipe>){
+        recipes.clear()
+        recipes.addAll(newRecipeList)
+        notifyDataSetChanged()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val itemView =LayoutInflater.from(parent.context).inflate(R.layout.example_item, parent, false)
         return ViewHolder(itemView)

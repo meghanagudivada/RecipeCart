@@ -58,10 +58,4 @@ class MainActivityViewModel(application: Application) :AndroidViewModel(applicat
 
 
     }
-//    fun getCurrentFragment():Fragment{
-//        return f
-//    }
-//    fun setCurrentFragment(fragment: Fragment){
-//        f= fragment
-//    }
 

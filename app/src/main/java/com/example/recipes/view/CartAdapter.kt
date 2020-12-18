@@ -13,6 +13,12 @@ import com.example.recipes.model.Recipe
 
 class CartAdapter(private val cartItems:ArrayList<Recipe>) : RecyclerView.Adapter<CartAdapter.ViewHolder>() {
 
+
+    fun updateList(newRecipeList:List<Recipe>){
+        cartItems.clear()
+        cartItems.addAll(newRecipeList)
+        notifyDataSetChanged()
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.cart_item,parent,false)
