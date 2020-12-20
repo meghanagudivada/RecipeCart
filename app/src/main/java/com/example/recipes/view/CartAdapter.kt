@@ -15,7 +15,7 @@ class CartAdapter(private val cartItems:ArrayList<Recipe>) : RecyclerView.Adapte
 
 
     fun updateList(newRecipeList:List<Recipe>){
-        cartItems.clear()
+//        cartItems.clear()
         cartItems.addAll(newRecipeList)
         notifyDataSetChanged()
     }

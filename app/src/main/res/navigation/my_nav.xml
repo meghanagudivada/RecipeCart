@@ -3,21 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/cartFragment">
-
+    app:startDestination="@id/defaultFragment2">
     <fragment
-        android:id="@+id/cartFragment"
-        android:name="com.example.recipes.view.CartFragment"
-        android:label="fragment_cart"
-        tools:layout="@layout/fragment_cart" />
+        android:id="@+id/defaultFragment2"
+        android:name="com.example.recipes.view.DefaultFragment"
+        android:label="fragment_default"
+        tools:layout="@layout/fragment_default" />
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/homeFragment2"
         android:name="com.example.recipes.view.HomeFragment"
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/defaultFragment"
-        android:name="com.example.recipes.view.DefaultFragment"
-        android:label="fragment_default"
-        tools:layout="@layout/fragment_default" />
+        android:id="@+id/cartFragment2"
+        android:name="com.example.recipes.view.CartFragment"
+        android:label="fragment_cart"
+        tools:layout="@layout/fragment_cart" />
 </navigation>

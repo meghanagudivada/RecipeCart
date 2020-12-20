@@ -19,7 +19,7 @@ class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: 
 
 
     fun updateRecipeList(newRecipeList:List<Recipe>){
-        recipes.clear()
+       // recipes.clear()
         recipes.addAll(newRecipeList)
         notifyDataSetChanged()
     }
@@ -47,9 +47,6 @@ class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: 
                 recipes[position].num ++
             }
 
-
-
-
             if (listener!=null)
                 listener.onItemClick(position,recipes[position])
             notifyItemChanged(position)
@@ -75,30 +72,12 @@ class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: 
 
 
     inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView)
-       // ,View.OnClickListener
+
     {
           val imageView:ImageView = itemView.findViewById(R.id.imageView)
           val nameTextView:TextView = itemView.findViewById(R.id.nameTextView)
           val priceTextView :TextView= itemView.findViewById(R.id.priceTextView)
           val addButton:Button = itemView.findViewById(R.id.addButton)
-
-        // fun bindItems(recipe: Recipe){
-
-
-
-       //  }
-
-
-
-//
-//         override fun onClick(v: View?) {
-//             val position = adapterPosition
-//             if(position!=RecyclerView.NO_POSITION)
-//               listener.onItemClick(position)
-//             notifyItemChanged(position)
-//       }
-
-
     }
 
     interface OnItemClickListener {
@@ -108,15 +87,6 @@ class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: 
     }
 
 
-//    fun getSelectedItems():List<Recipe>
-//    {
-//        var cartItems = arrayListOf<Recipe>()
-//        for(i in recipes)
-//           if (i.isClicked)
-//               cartItems.add(i)
-//        notifyDataSetChanged()
-//       return cartItems
-//
-//    }
+
 
 }
