@@ -19,25 +19,27 @@ import com.example.recipes.model.Recipe
 import com.example.recipes.viewmodel.MainActivityViewModel
 
 
-class CartFragment() : Fragment() {
+class CartFragment() : Fragment(),CartAdapter.CartItemClickListener {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var imageView:ImageView
     private lateinit var button: Button
     private lateinit var viewModel: MainActivityViewModel
 
-
-
-    // private val viewModel: MainActivityViewModel by activityViewModels()
-    private val cartAdapter = CartAdapter(arrayListOf())
+    private val cartAdapter = CartAdapter(arrayListOf(),this)
+    private val cartItems = arrayListOf<Recipe>()
     private val cartDataObserver = Observer<ArrayList<Recipe>>{
-        cartAdapter.updateList(it)
+       for (i in it){
+           if (i.isClicked)
+               cartItems.add(i)
+       }
+        cartAdapter.updateList(cartItems)
+
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         Log.i("tag", "OnCreateView from cart fragment")
         return inflater.inflate(R.layout.fragment_cart, container, false)
     }
@@ -48,25 +50,21 @@ class CartFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
          Log.i("tag", "fragment onViewCreated called")
         viewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
-        //viewModel.recipes.observe(viewLifecycleOwner, cartDataObserver)
-        viewModel.getCartItems().observe(viewLifecycleOwner,cartDataObserver)
+        viewModel.recipes.observe(viewLifecycleOwner,cartDataObserver)
         recyclerView = view.findViewById(R.id.cartRecyclerView)
-        imageView = view.findViewById(R.id.cartEmptyImage)
-        button = view.findViewById(R.id.btn_place_order)
+       // imageView = view.findViewById(R.id.cartEmptyImage)
+        //button = view.findViewById(R.id.btn_place_order)
         recyclerView.adapter = cartAdapter
         recyclerView.layoutManager = LinearLayoutManager(context)
-//        if (cartAdapter.itemCount ==0) {
-//          imageView.visibility = View.VISIBLE
-//          button.visibility = View.GONE
-//          recyclerView.visibility = View.GONE
-//        }
-//        else
-//        {
-//         button.visibility = View.VISIBLE
-//         imageView.visibility = View.GONE
-//        }
+
 
     }
+
+    override fun onItemClick() {
+        var total = 0
+        //for (i in cartItems)
+    }
+
 
 
 }

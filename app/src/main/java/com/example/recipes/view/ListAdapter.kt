@@ -19,7 +19,6 @@ class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: 
 
 
     fun updateRecipeList(newRecipeList:List<Recipe>){
-       // recipes.clear()
         recipes.addAll(newRecipeList)
         notifyDataSetChanged()
     }
@@ -29,7 +28,7 @@ class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: 
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-      //  holder.bindItems(recipes[position])
+
 
         Glide.with(holder.imageView.context).load(recipes[position].image).into(holder.imageView)
         holder.nameTextView.text =recipes[position].name
@@ -56,8 +55,6 @@ class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: 
 
 
         holder.imageView.setOnClickListener {
-
-
             startActivity(it.context, Intent(it.context, DetailsActivity::class.java).putExtra("imageUrl", recipes[position].image).putExtra("content", recipes[position].description).putExtra("name", recipes[position].name), null)
         }
 
@@ -67,7 +64,6 @@ class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: 
 
     override fun getItemCount(): Int {
         return recipes.size
-
     }
 
 
@@ -85,8 +81,4 @@ class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: 
         fun onItemClick(position: Int,recipe: Recipe)
 
     }
-
-
-
-
 }

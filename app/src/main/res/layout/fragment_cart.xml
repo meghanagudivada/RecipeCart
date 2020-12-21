@@ -4,21 +4,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.CartFragment">
-<ImageView
-    android:src="@drawable/cart_empty"
-    android:id="@+id/cartEmptyImage"
-    android:visibility="gone"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"></ImageView>
-<Button
-    android:id="@+id/btn_place_order"
-    android:visibility="gone"
-    android:layout_alignParentBottom="true"
-    android:text="PLACE ORDER"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"></Button>
+
+<!--<Button-->
+<!--    android:id="@+id/btn_place_order"-->
+<!--    android:layout_alignParentBottom="true"-->
+<!--    android:text="PLACE ORDER"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"></Button>-->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn_total"
+        android:text="TOTAL"
+        android:layout_alignParentBottom="true"
+        ></Button>
 <androidx.recyclerview.widget.RecyclerView
-    android:layout_above="@+id/btn_place_order"
+    android:layout_above="@+id/btn_total"
     android:id="@+id/cartRecyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>

@@ -20,51 +20,58 @@ class MainActivityViewModel(application: Application) :AndroidViewModel(applicat
        val recipes by lazy { MutableLiveData<ArrayList<Recipe>>() }
        private val cartItem by lazy { MutableLiveData<ArrayList<Recipe>>() }
 
-    fun getRecipes():LiveData<ArrayList<Recipe>>{
-    var retService: ApiService =  RetrofitInstance.getService().create(ApiService::class.java)
-    val call: retrofit2.Call<List<Recipe>> = retService.getRecipes()
-    call.enqueue(object : retrofit2.Callback<List<Recipe>>{
-            override fun onResponse(
-                call: retrofit2.Call<List<Recipe>>,
-                response: Response<List<Recipe>> ) {
+    fun getRecipes():LiveData<ArrayList<Recipe>> {
 
-                val data = (response.body() as ArrayList<Recipe>?)!!
-                for (i in 0 until data.size) {
-                    Log.i("name", data[i].name)
-                    data[i].isClicked = false
-                    data[i].num = 0
+        if (recipes.value.isNullOrEmpty()) {
+            var retService: ApiService =
+                RetrofitInstance.getService().create(ApiService::class.java)
+            val call: retrofit2.Call<List<Recipe>> = retService.getRecipes()
+            call.enqueue(object : retrofit2.Callback<List<Recipe>> {
+                override fun onResponse(
+                    call: retrofit2.Call<List<Recipe>>,
+                    response: Response<List<Recipe>>
+                ) {
+
+                    val data = (response.body() as ArrayList<Recipe>?)!!
+                    for (i in 0 until data.size) {
+                        Log.i("name", data[i].name)
+                        data[i].isClicked = false
+                        data[i].num = 0
+                    }
+                    recipes.value = data
                 }
-                recipes.value = data }
 
-            override fun onFailure(call: retrofit2.Call<List<Recipe>>, t: Throwable) {
-                Log.i("error", t.message.toString())
-                recipes.value = null
-            }
+                override fun onFailure(call: retrofit2.Call<List<Recipe>>, t: Throwable) {
+                    Log.i("error", t.message.toString())
+                    recipes.value = null
+                }
 
-        })
+            })
+
+
+        }
         return recipes
-
     }
     fun updateRecipes(position: Int, r: Recipe ){
         recipes.value?.set(position, r)
     }
 
-    fun getCartItems():LiveData<ArrayList<Recipe>> {
-
-        cartItem.value = arrayListOf()
-        for (i in recipes.value!!) {
-
-            if (i.isClicked) {
-                Log.i("getCartItems", "function called")
-                cartItem.value?.add(i)
-                cartItem.value?.get(0)?.let { Log.i("getCartItems", it.name) }
-            }
-        }
-
-            return cartItem
-
-            }
-
-
-    }
+//    fun getCartItems():LiveData<ArrayList<Recipe>> {
+//
+//        cartItem.value = arrayListOf()
+//        for (i in recipes.value!!) {
+//
+//            if (i.isClicked) {
+//                Log.i("getCartItems", "function called")
+//                cartItem.value?.add(i)
+//                cartItem.value?.get(0)?.let { Log.i("getCartItems", it.name) }
+//            }
+//        }
+//
+//            return cartItem
+//
+//            }
+//
+//
+  }
 

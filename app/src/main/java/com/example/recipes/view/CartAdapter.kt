@@ -11,11 +11,13 @@ import com.cepheuen.elegantnumberbutton.view.ElegantNumberButton
 import com.example.recipes.R
 import com.example.recipes.model.Recipe
 
-class CartAdapter(private val cartItems:ArrayList<Recipe>) : RecyclerView.Adapter<CartAdapter.ViewHolder>() {
+class CartAdapter(private val cartItems:ArrayList<Recipe>,private val listener:CartAdapter.CartItemClickListener)
+    : RecyclerView.Adapter<CartAdapter.ViewHolder>()
+
+{
 
 
     fun updateList(newRecipeList:List<Recipe>){
-//        cartItems.clear()
         cartItems.addAll(newRecipeList)
         notifyDataSetChanged()
     }
@@ -35,6 +37,7 @@ class CartAdapter(private val cartItems:ArrayList<Recipe>) : RecyclerView.Adapte
         holder.txt_amount.number = cartItems[position].num.toString()
         holder.txt_amount.setOnValueChangeListener { view, oldValue, newValue ->
 
+
             res.num = newValue
             if (newValue == 0) {
                 res.isClicked=false
@@ -43,6 +46,9 @@ class CartAdapter(private val cartItems:ArrayList<Recipe>) : RecyclerView.Adapte
             }
             else
              holder.priceTextView.text =  res.price.toDouble() .times(newValue).toString().format("%.1f") + "$"
+
+            if (listener!=null)
+                listener.onItemClick()
         }
 
 
@@ -59,6 +65,11 @@ class CartAdapter(private val cartItems:ArrayList<Recipe>) : RecyclerView.Adapte
         val categoryTextView:TextView = itemView.findViewById(R.id.itemCategoryTextView)
         val priceTextView:TextView = itemView.findViewById(R.id.itemPriceTextView)
         val txt_amount:ElegantNumberButton = itemView.findViewById(R.id.txt_amount)
+
+    }
+    interface CartItemClickListener {
+
+        fun onItemClick()
 
     }
 }
