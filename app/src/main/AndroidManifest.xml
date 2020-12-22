@@ -13,7 +13,7 @@
         android:supportsRtl="true">
 <!--        android:theme="@style/Theme.Recipes"-->
 
-        <activity android:name=".view.DetailsActivity"></activity>
+
 
         <activity android:name=".view.MainActivity">
             <intent-filter>

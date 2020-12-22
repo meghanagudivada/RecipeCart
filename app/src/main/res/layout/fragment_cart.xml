@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.CartFragment">
-
-<!--<Button-->
-<!--    android:id="@+id/btn_place_order"-->
-<!--    android:layout_alignParentBottom="true"-->
-<!--    android:text="PLACE ORDER"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="wrap_content"></Button>-->
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_total"
-        android:text="TOTAL"
-        android:layout_alignParentBottom="true"
-        ></Button>
+    tools:context=".view.fragments.CartFragment">
+<ImageView
+    android:src="@drawable/cart_empty"
+    android:id="@+id/cartEmptyImage"
+    android:visibility="gone"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"></ImageView>
+<Button
+    android:id="@+id/button"
+    android:layout_alignParentBottom="true"
+    android:text="PLACE ORDER"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"></Button>
 <androidx.recyclerview.widget.RecyclerView
-    android:layout_above="@+id/btn_total"
+    android:layout_above="@+id/button"
     android:id="@+id/cartRecyclerView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
 
 </RelativeLayout>
+</layout>

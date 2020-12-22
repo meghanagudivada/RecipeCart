@@ -1,21 +1,19 @@
-package com.example.recipes.view
+package com.example.recipes.view.adapter
 
 
-import android.content.Intent
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.recipes.R
 import com.example.recipes.model.Recipe
+import com.example.recipes.util.ImageClick
+import com.example.recipes.util.ListItemClick
+import com.example.recipes.util.loadImage
 
-class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: OnItemClickListener
+class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: ListItemClick,private val imageListener:ImageClick
 ) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
-
 
 
     fun updateRecipeList(newRecipeList:List<Recipe>){
@@ -29,8 +27,7 @@ class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-
-        Glide.with(holder.imageView.context).load(recipes[position].image).into(holder.imageView)
+        holder.imageView.loadImage(recipes[position].image)
         holder.nameTextView.text =recipes[position].name
         holder.priceTextView.text =recipes[position].price + "$"
         holder.addButton.setOnClickListener(View.OnClickListener {
@@ -54,9 +51,14 @@ class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: 
         })
 
 
-        holder.imageView.setOnClickListener {
-            startActivity(it.context, Intent(it.context, DetailsActivity::class.java).putExtra("imageUrl", recipes[position].image).putExtra("content", recipes[position].description).putExtra("name", recipes[position].name), null)
-        }
+//        holder.imageView.setOnClickListener {
+//            startActivity(it.context, Intent(it.context, DetailsActivity::class.java).putExtra("imageUrl", recipes[position].image).putExtra("content", recipes[position].description).putExtra("name", recipes[position].name), null)
+//        }
+          holder.imageView.setOnClickListener {
+              if (imageListener!=null)
+                  imageListener.onImageClick(position)
+
+          }
 
 
 
@@ -65,8 +67,6 @@ class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: 
     override fun getItemCount(): Int {
         return recipes.size
     }
-
-
     inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView)
 
     {
@@ -76,9 +76,9 @@ class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: 
           val addButton:Button = itemView.findViewById(R.id.addButton)
     }
 
-    interface OnItemClickListener {
 
-        fun onItemClick(position: Int,recipe: Recipe)
 
-    }
+
+
+
 }

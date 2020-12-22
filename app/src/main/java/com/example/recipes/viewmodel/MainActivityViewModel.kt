@@ -3,22 +3,19 @@ package com.example.recipes.viewmodel
 
 import android.app.Application
 import android.util.Log
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.example.recipes.model.ApiService
 import com.example.recipes.model.Recipe
 import com.example.recipes.model.RetrofitInstance
-import com.example.recipes.view.DefaultFragment
 import retrofit2.Response
 
 
 class MainActivityViewModel(application: Application) :AndroidViewModel(application)  {
 
        val recipes by lazy { MutableLiveData<ArrayList<Recipe>>() }
-       private val cartItem by lazy { MutableLiveData<ArrayList<Recipe>>() }
+       val currentRecipe by lazy { MutableLiveData<Recipe>() }
 
     fun getRecipes():LiveData<ArrayList<Recipe>> {
 
@@ -56,22 +53,12 @@ class MainActivityViewModel(application: Application) :AndroidViewModel(applicat
         recipes.value?.set(position, r)
     }
 
-//    fun getCartItems():LiveData<ArrayList<Recipe>> {
-//
-//        cartItem.value = arrayListOf()
-//        for (i in recipes.value!!) {
-//
-//            if (i.isClicked) {
-//                Log.i("getCartItems", "function called")
-//                cartItem.value?.add(i)
-//                cartItem.value?.get(0)?.let { Log.i("getCartItems", it.name) }
-//            }
-//        }
-//
-//            return cartItem
-//
-//            }
-//
-//
+    fun getRecipe():LiveData<Recipe>{
+        return currentRecipe
+    }
+    fun setRecipe(position: Int){
+      var recipe = recipes.value?.get(position)
+      currentRecipe.value = recipe
+    }
   }
 

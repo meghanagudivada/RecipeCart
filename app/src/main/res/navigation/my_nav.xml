@@ -3,20 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/my_nav"
-    app:startDestination="@id/defaultFragment2">
+    app:startDestination="@id/defaultFragment">
     <fragment
-        android:id="@+id/defaultFragment2"
-        android:name="com.example.recipes.view.DefaultFragment"
+        android:id="@+id/defaultFragment"
+        android:name="com.example.recipes.view.fragments.DefaultFragment"
         android:label="fragment_default"
         tools:layout="@layout/fragment_default" />
     <fragment
-        android:id="@+id/homeFragment2"
-        android:name="com.example.recipes.view.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/homeFragment"
+        android:name="com.example.recipes.view.fragments.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_homeFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+    </fragment>
     <fragment
-        android:id="@+id/cartFragment2"
-        android:name="com.example.recipes.view.CartFragment"
-        android:label="fragment_cart"
-        tools:layout="@layout/fragment_cart" />
+        android:id="@+id/detailsFragment"
+        android:name="com.example.recipes.view.fragments.DetailsFragment"
+        android:label="DetailsFragment"
+        tools:layout="@layout/fragment_details"/>
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.example.recipes.view.fragments.CartFragment"
+        android:label="CartFragment"
+        tools:layout="@layout/fragment_cart"/>
 </navigation>
