@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity()
 
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this,R.layout.activity_main)
+
+        //Configuring the bottom navigation view with the nav host fragment
         binding.bottomNavigation.setupWithNavController(findNavController(R.id.fragment))
 
 

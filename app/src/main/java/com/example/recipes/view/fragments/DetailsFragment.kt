@@ -25,15 +25,15 @@ import com.example.recipes.viewmodel.MainActivityViewModel
 
 class DetailsFragment : Fragment() {
 
-   private lateinit var binding: FragmentDetailsBinding
+    private lateinit var binding: FragmentDetailsBinding
     private lateinit var navController: NavController
     private lateinit var viewModel: MainActivityViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_details,container,false)
+
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_details, container, false)
         return binding.root
     }
 
@@ -41,7 +41,9 @@ class DetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
         viewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
-        viewModel.getRecipe().observe(viewLifecycleOwner, Observer<Recipe>{
+
+       //Observing the current Recipe selected so as to display its respective contents
+        viewModel.getRecipe().observe(viewLifecycleOwner, Observer<Recipe> {
             binding.nameTextView.text = it.name
             binding.contentTextView.text = it.description
             Glide.with(binding.imageView.context).load(it.image).into(binding.imageView)
@@ -52,17 +54,19 @@ class DetailsFragment : Fragment() {
 
     }
 
-    private  fun setupBackgroundColor(url:String){
+    //Function to set up the background color of the fragment using palette library and Glide
+    private fun setupBackgroundColor(url: String) {
         Glide.with(this)
             .asBitmap()
             .load(url)
-            .into(object : CustomTarget<Bitmap>(){
+            .into(object : CustomTarget<Bitmap>() {
                 override fun onResourceReady(
                     resource: Bitmap,
                     transition: Transition<in Bitmap>?
                 ) {
                     Palette.from(resource)
-                        .generate(){palette -> val intColor = palette?.mutedSwatch?.rgb ?:0
+                        .generate() { palette ->
+                            val intColor = palette?.mutedSwatch?.rgb ?: 0
                             //
                             binding.linearLayout.setBackgroundColor(intColor)
                         }

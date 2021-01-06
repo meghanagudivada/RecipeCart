@@ -12,54 +12,54 @@ import com.example.recipes.util.ImageClick
 import com.example.recipes.util.ListItemClick
 import com.example.recipes.util.loadImage
 
-class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: ListItemClick,private val imageListener:ImageClick
+class ListAdapter(
+    private val recipes: ArrayList<Recipe>,
+    private val listener: ListItemClick,
+    private val imageListener: ImageClick
 ) : RecyclerView.Adapter<ListAdapter.ViewHolder>() {
 
 
-    fun updateRecipeList(newRecipeList:List<Recipe>){
+    fun updateRecipeList(newRecipeList: List<Recipe>) {
         recipes.addAll(newRecipeList)
         notifyDataSetChanged()
     }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val itemView =LayoutInflater.from(parent.context).inflate(R.layout.example_item, parent, false)
+        val itemView =
+            LayoutInflater.from(parent.context).inflate(R.layout.example_item, parent, false)
         return ViewHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.imageView.loadImage(recipes[position].image)
-        holder.nameTextView.text =recipes[position].name
-        holder.priceTextView.text =recipes[position].price + "$"
+        holder.nameTextView.text = recipes[position].name
+        holder.priceTextView.text = recipes[position].price + "$"
         holder.addButton.setOnClickListener(View.OnClickListener {
 
-            if (!recipes[position].isClicked)
-            {
-                 recipes[position].isClicked = true
-                 recipes[position].num = 1
+            if (!recipes[position].isClicked) {
+                recipes[position].isClicked = true
+                recipes[position].num = 1
 
-            }
-            else
-            {
-                recipes[position].num ++
+            } else {
+                recipes[position].num++
             }
 
-            if (listener!=null)
-                listener.onItemClick(position,recipes[position])
+           //If Add button is clicked,the item needs to be added to the cart
+            if (listener != null)
+                listener.onItemClick(position, recipes[position])
             notifyItemChanged(position)
 
 
         })
 
+        //If Image is clicked,then details fragment is to be loaded
 
-//        holder.imageView.setOnClickListener {
-//            startActivity(it.context, Intent(it.context, DetailsActivity::class.java).putExtra("imageUrl", recipes[position].image).putExtra("content", recipes[position].description).putExtra("name", recipes[position].name), null)
-//        }
-          holder.imageView.setOnClickListener {
-              if (imageListener!=null)
-                  imageListener.onImageClick(position)
+        holder.imageView.setOnClickListener {
+            if (imageListener != null)
+                imageListener.onImageClick(position)
 
-          }
-
+        }
 
 
     }
@@ -67,18 +67,13 @@ class ListAdapter(private val recipes: ArrayList<Recipe>, private val listener: 
     override fun getItemCount(): Int {
         return recipes.size
     }
-    inner class ViewHolder(itemView: View):RecyclerView.ViewHolder(itemView)
 
-    {
-          val imageView:ImageView = itemView.findViewById(R.id.imageView)
-          val nameTextView:TextView = itemView.findViewById(R.id.nameTextView)
-          val priceTextView :TextView= itemView.findViewById(R.id.priceTextView)
-          val addButton:Button = itemView.findViewById(R.id.addButton)
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        val imageView: ImageView = itemView.findViewById(R.id.imageView)
+        val nameTextView: TextView = itemView.findViewById(R.id.nameTextView)
+        val priceTextView: TextView = itemView.findViewById(R.id.priceTextView)
+        val addButton: Button = itemView.findViewById(R.id.addButton)
     }
-
-
-
-
 
 
 }

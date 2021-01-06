@@ -27,74 +27,66 @@ class CartFragment() : Fragment(), CartItemClick {
 
     private lateinit var viewModel: MainActivityViewModel
     private lateinit var binding: FragmentCartBinding
-    private val cartAdapter = CartAdapter(arrayListOf(),this)
-    private val cartItems = arrayListOf<Recipe>()
+    private val cartAdapter = CartAdapter(arrayListOf(), this)
 
-    private val cartDataObserver = Observer<ArrayList<Recipe>>{
-       for (i in it){
-           if (i.isClicked)
-               cartItems.add(i)
-       }
-        cartAdapter.updateList(cartItems)
+    //Observer of cartItems live data
+    private val cartDataObserver = Observer<ArrayList<Recipe>> {
+
+        //Updating the cartAdapter with cart Items
+        cartAdapter.updateList(it)
         calculateTotal()
-
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        binding = DataBindingUtil.inflate(inflater,R.layout.fragment_cart,container,false)
-        return  binding.root
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_cart, container, false)
+        return binding.root
     }
-
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel = ViewModelProvider(requireActivity()).get(MainActivityViewModel::class.java)
-        viewModel.recipes.observe(viewLifecycleOwner,cartDataObserver)
+        viewModel.cartItems.observe(viewLifecycleOwner, cartDataObserver)
         binding.cartRecyclerView.apply {
             adapter = cartAdapter
-            layoutManager  = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(context)
         }
 
         calculateTotal()
 
     }
 
+    //Function to update UI if the cart is empty an empty bag image is displayed
     @SuppressLint("SetTextI18n")
-    private fun calculateTotal(){
-        var total = 0.0
-        if (cartAdapter.itemCount ==0)
-         {
+    private fun calculateTotal() {
+
+        if (cartAdapter.itemCount == 0) {
             binding.apply {
                 cartEmptyImage.visibility = View.VISIBLE
                 button.visibility = View.GONE
                 button.text = "TOTAL = 0"
             }
 
-         }
-        else
-        {
+        } else {
             binding.apply {
-                cartEmptyImage.visibility= View.GONE
+                cartEmptyImage.visibility = View.GONE
                 button.visibility = View.VISIBLE
             }
 
-
+            binding.button.text =
+                "TOTAL = " + viewModel.getTotalValue().toString().format("%.1f") + "$"
         }
-        for (i in cartItems)
 
-        {
-            total += i.price.toDouble().times(i.num)
-            binding.button.text = "TOTAL = " +  total.toString().format("%.1f") + "$"
-        }
     }
 
-
+    //On item click on any of the cart item on the Recycler View
     override fun onItemClick() {
+        viewModel.getCartItems()
         calculateTotal()
     }
 
