@@ -30,7 +30,7 @@ fun updateList(newRecipeList:List<Recipe>){
         val res = cartItems[position]
         Glide.with(holder.imageView.context).load(cartItems[position].image).into(holder.imageView)
         holder.nameTextView.text = cartItems[position].name
-        holder.priceTextView.text = cartItems[position].price + "$"
+        holder.priceTextView.text = cartItems[position].price.toDouble() .times(cartItems[position].num).toString().format("%.1f") + "$"
         holder.categoryTextView.text = cartItems[position].category
         holder.txt_amount.number = cartItems[position].num.toString()
         holder.txt_amount.setOnValueChangeListener { view, oldValue, newValue ->
